@@ -1,25 +1,34 @@
 import logo from './logo.svg';
 import './App.css';
+import { Livepeer } from './Livepeer';
 
+import {
+  LivepeerConfig,
+  createReactClient,
+  studioProvider,
+} from '@livepeer/react';
+ 
+const client = createReactClient({
+  provider: studioProvider({ apiKey: '63cf12ac-92f1-4653-8aed-6e028af4bbc263cf12ac-92f1-4653-8aed-6e028af4bbc2' }),
+});
+ 
+const livepeerTheme = {
+  colors: {
+    accent: 'rgb(0, 145, 255)',
+    containerBorderColor: 'rgba(0, 145, 255, 0.9)',
+  },
+  fonts: {
+    display: 'Inter',
+  },
+};
+ 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <LivepeerConfig client={client} theme={livepeerTheme}>
+      <Livepeer />
+    </LivepeerConfig>
   );
 }
+
 
 export default App;
