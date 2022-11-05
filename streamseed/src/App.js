@@ -9,7 +9,7 @@ import {
 } from '@livepeer/react';
  
 const client = createReactClient({
-  provider: studioProvider({ apiKey: '63cf12ac-92f1-4653-8aed-6e028af4bbc263cf12ac-92f1-4653-8aed-6e028af4bbc2' }),
+  provider: studioProvider({ apiKey: '098c9b05-ebd9-4a18-8477-4ceade2a79b7' }),
 });
  
 const livepeerTheme = {
