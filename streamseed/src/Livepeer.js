@@ -2,25 +2,7 @@ import { Player } from '@livepeer/react';
 import * as React from 'react';
 import poster from './images/free_speech.jpeg';
 
-/*
-import Image from 'next/image';
-
-
-const PosterImage = () => {
-  return (
-    <Image
-      src={poster}
-      layout="fill"
-      objectFit="cover"
-      priority
-      placeholder="blur"
-    />
-  );
-};
- */
-
-const playbackId =
-  'bafybeigtqixg4ywcem3p6sitz55wy6xvnr565s6kuwhznpwjices3mmxoe';
+const playbackId = '76c2of8uysti6e23';
  
 export function Livepeer() {
   return (
