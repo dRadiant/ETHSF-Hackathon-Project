@@ -55,3 +55,8 @@ body {
     background-color: #404040 !important;
     border-radius: 10px;
 }
+
+.DescriptionBox {
+    background-color: #454545;
+    border-radius: 10px;
+}
