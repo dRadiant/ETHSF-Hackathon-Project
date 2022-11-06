@@ -1,9 +1,11 @@
-import React from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { useSigner } from 'wagmi';
+import { Client } from '@xmtp/xmtp-js';
 
-class XMTPChatbox extends React.Component {
-  render() {
-    return <div>XMTP Baby!</div>;
-  }
+export default function XmtpProvider() {
+  const [client, setClient] = useState();
+  const { data: signer, isError, isLoading } = useSigner();
+  console.log(signer);
+
+  return <h1>hey</h1>;
 }
-
-export default XMTPChatbox;
