@@ -74,12 +74,7 @@ class XMTPChatbox extends React.Component {
     messages = [...new Set(messages)]; // Duplicate remove
 
     // Sort messages by time in
-    messages = messages.sort((a, b) => a.sent.getMilliseconds() > b.sent.getMilliseconds());
-
-    messages.sort((a, b) => a.sent.getTime() < b.sent.getTime());
-    console.log(messages);
-    messages.sort((a, b) => a.sent.getTime() > b.sent.getTime());
-    console.log(messages);
+    messages.sort((a, b) => a.sent.getTime() - b.sent.getTime());
     this.setState({ messagesInInbox: messages });
   }
 
@@ -108,7 +103,6 @@ class XMTPChatbox extends React.Component {
             : {message.content}
           </Box>
         ))}
-        <Divider />
         <Input
           placeholder='Send a message'
           value={this.state.value}
@@ -117,6 +111,7 @@ class XMTPChatbox extends React.Component {
             if (e.key === 'Enter') {
               console.log(`Sending Message ${messageToSend}`);
               conversationWithInbox.send(messageToSend);
+              this.setState({ value: "" });
             }
           }}
         />
