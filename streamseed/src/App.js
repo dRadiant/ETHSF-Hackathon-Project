@@ -81,11 +81,19 @@ class App extends React.Component {
           <GridItem pl='0' /*bg='pink.300'*/ area={'player'} className="Player">
             {/*<Heading size="sm">My Awesome Stream</Heading>*/}
             <Center w="100%" h="100%">
-              <Box className="PlayerContainer">
+              {isUnlocked ? <Box className="PlayerContainer">
                 <LivepeerConfig client={client} theme={livepeerTheme}>
                   <Livepeer />
                 </LivepeerConfig>
-              </Box>
+              </Box> : <Box className="PlayerContainer"><Center w="100%" h="100%">
+                    <VStack spacing="10">
+                      <LockIcon boxSize="150" />
+                      <Heading size="md" textAlign="center">
+                      You must have a membership token to watch
+                      </Heading>
+                      <Button className="JoinButton" onClick={this.checkout} size="lg">Join</Button>
+                    </VStack>                    
+                  </Center></Box>}
             </Center>
           </GridItem>
           <GridItem pl='2' area={'chatbox'} className="Chatbox">

@@ -60,3 +60,7 @@ body {
     background-color: #454545;
     border-radius: 10px;
 }
+
+.ChatboxInput {
+    padding: 1em;
+}

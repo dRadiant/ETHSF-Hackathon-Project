@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Center, Divider } from '@chakra-ui/react';
+import { Box, Center, VStack } from '@chakra-ui/react';
 
 import { Client } from '@xmtp/xmtp-js';
 
@@ -107,11 +107,13 @@ class XMTPChatbox extends React.Component {
           placeholder='Send a message'
           value={this.state.value}
           onChange={handleChange}
+          mt="30vh"
+          className="ChatboxInput"
           onKeyPress={(e) => {
             if (e.key === 'Enter') {
+              if (!messageToSend) return;
               console.log(`Sending Message ${messageToSend}`);
               conversationWithInbox.send(messageToSend);
-              this.setState({ value: "" });
             }
           }}
         />
