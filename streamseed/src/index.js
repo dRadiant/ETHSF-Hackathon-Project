@@ -32,11 +32,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <WagmiConfig client={wagmiClient}>
     <RainbowKitProvider chains={chains} theme={darkTheme()}>
-      <React.StrictMode> 
+      {/*<React.StrictMode>*/}
         <ChakraProvider>
           <App />
         </ChakraProvider>
-      </React.StrictMode>
+      {/*</React.StrictMode>*/}
     </RainbowKitProvider>
   </WagmiConfig>
 );
