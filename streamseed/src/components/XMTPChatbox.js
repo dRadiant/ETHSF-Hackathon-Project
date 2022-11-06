@@ -19,6 +19,7 @@ class XMTPChatbox extends React.Component {
     inboxXMTP: '',
     conversationWithInbox: '',
     messagesInInbox: '',
+    value: ""
   };
 
   componentDidMount = async () => {
@@ -78,6 +79,10 @@ class XMTPChatbox extends React.Component {
     this.setState({ messagesInInbox: messages });
   }
 
+  handleChange = e => {
+    this.setState({ value: e.target.value });
+  }
+
   render() {
     const { messagesInInbox, conversationWithInbox } = this.state;
     let messageToSend = '';
@@ -106,14 +111,15 @@ class XMTPChatbox extends React.Component {
         <Input
           placeholder='Send a message'
           value={this.state.value}
-          onChange={handleChange}
+          onChange={this.handleChange}
           mt="30vh"
           className="ChatboxInput"
           onKeyPress={(e) => {
             if (e.key === 'Enter') {
-              if (!messageToSend) return;
-              console.log(`Sending Message ${messageToSend}`);
-              conversationWithInbox.send(messageToSend);
+              if (!this.state.value) return;
+              console.log(`Sending Message ${this.state.value}`);
+              conversationWithInbox.send(this.state.value);
+              this.setState({ value: "" });
             }
           }}
         />
