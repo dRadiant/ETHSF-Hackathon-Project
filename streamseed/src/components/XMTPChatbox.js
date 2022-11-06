@@ -19,7 +19,7 @@ class XMTPChatbox extends React.Component {
         messagesInInbox: ""
     }
 
-    async componentDidMount() {
+    componentDidMount = async () => {
         window.Buffer = window.Buffer || require("buffer").Buffer; // Init Buffer as React Scripts >=5.0.0 removes it
 
         const userSigner = (new ethers.providers.Web3Provider(window.ethereum)).getSigner();
@@ -32,10 +32,10 @@ class XMTPChatbox extends React.Component {
 
         const conversationWithInbox = await userXMTP.conversations.newConversation('0x6C3ea836d6245fe6449E79c78736496bF3E7f2A5');
 
-        this.setState({ userSigner, userXMTP, inboxXMTP, conversationWithInbox });
-
-        this.pullInboxMessages();
-        this.interval = setInterval(() => this.pullInboxMessages, 1000);
+        this.setState({ userSigner, userXMTP, inboxXMTP, conversationWithInbox }, () => {
+            this.pullInboxMessages();
+            this.interval = setInterval(() => this.pullInboxMessages, 1000);
+        });
     }
 
     componentWillUnmount() {
@@ -53,13 +53,22 @@ class XMTPChatbox extends React.Component {
             console.log(await conversationWithInbox.messages())
         */
 
-        const messages = [];
+        let messages = [];
 
-        const allConversations = await xmtp.conversations.list();
+        const allConversations = await inboxXMTP.conversations.list();
 
         for (const convo of allConversations) {
+            const msgs = await convo.messages();
             
+            msgs.forEach(m => messages.push(m));
         }
+
+        messages = [...new Set(messages)]; // Duplicate remove
+
+        // Sort messages by time in
+        messages.sort((a, b) => a.sent < b.sent);
+
+        this.setState({ messagesInInbox: messages });
     }
 
     render() {
