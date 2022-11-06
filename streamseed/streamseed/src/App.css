@@ -1,0 +1,62 @@
+body {
+    background-color: #222222;
+}
+
+.Header {
+    background-color: #222222;
+    color: white;
+}
+
+.Player {
+    background-color: #222222;
+    color: white;
+}
+
+.Chatbox {
+    background-color: #222222;
+    color: white;
+}
+
+.Description {
+    background-color: #222222;
+    color: white;
+}
+
+.Footer {
+    background-color: #222222;
+    color: white;
+}
+
+.PlayerContainer {
+    background-color: #454545;
+    margin-left: 2vw;
+    height: 85%;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.ChatboxContainer {
+    background-color: #454545;
+    height: 85%;
+    width: 100%;
+    border-radius: 10px;
+    margin-left: 2vw;
+    margin-right: 2vw;
+}
+
+.ConnectWallet {
+    background-color: #4E4E4E;
+    border-radius: 10px;
+    padding: 7px;
+    font-size: small;
+}
+
+.JoinButton {
+    background-color: #404040 !important;
+    border-radius: 10px;
+}
+
+.DescriptionBox {
+    background-color: #454545;
+    border-radius: 10px;
+}
