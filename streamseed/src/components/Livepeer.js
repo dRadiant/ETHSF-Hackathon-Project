@@ -28,6 +28,7 @@ export function Livepeer() {
       autoPlay
       showTitle={false}
       muted
+      aspectRatio="3to2"
       poster={<div />}
     />
   );
