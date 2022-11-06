@@ -65,7 +65,7 @@ class XMTPChatbox extends React.Component {
     render() {
         return(
             <Box>
-                Hi XMTP
+                0x9
             </Box>
         )
     }
