@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box } from '@chakra-ui/react';
+import { Box, Center, Divider } from '@chakra-ui/react';
 
 import { Client } from '@xmtp/xmtp-js';
 
@@ -44,7 +44,7 @@ class XMTPChatbox extends React.Component {
       { userSigner, userXMTP, inboxXMTP, conversationWithInbox },
       () => {
         this.pullInboxMessages();
-        this.interval = setInterval(() => this.pullInboxMessages, 1000);
+        this.interval = setInterval(() => this.pullInboxMessages(), 1000);
       }
     );
   };
@@ -53,7 +53,6 @@ class XMTPChatbox extends React.Component {
 
   async pullInboxMessages() {
     const { inboxXMTP } = this.state;
-
     /*
             const messages = await conversationWithInbox.messages()
 
@@ -75,7 +74,7 @@ class XMTPChatbox extends React.Component {
     messages = [...new Set(messages)]; // Duplicate remove
 
     // Sort messages by time in
-    messages.sort((a, b) => a.sent < b.sent);
+    messages = messages.sort((a, b) => a.sent.getMilliseconds() > b.sent.getMilliseconds());
 
     messages.sort((a, b) => a.sent.getTime() < b.sent.getTime());
     console.log(messages);
@@ -91,7 +90,7 @@ class XMTPChatbox extends React.Component {
       messageToSend = event.target.value;
       console.log(messageToSend);
     }
-    if (!this.state.messagesInInbox) return <div>Loading...</div>;
+    if (!this.state.messagesInInbox) return <Center w="100%" h="100%"><div>Loading...</div></Center>;
     const test = this.state.messagesInInbox.map((message) => (
       <h1>
         {message.senderAddress}: {message.content}
@@ -100,15 +99,16 @@ class XMTPChatbox extends React.Component {
     return (
       <Box>
         {this.state.messagesInInbox.slice(-10).map((message, index) => (
-          <h1 key={index}>
+          <Box pl="1" key={index}>
             <a
               href={`https://mumbai.polygonscan.com/address/${message.senderAddress}`}
             >
               {message.senderAddress.slice(0, 5)}...
             </a>
             : {message.content}
-          </h1>
+          </Box>
         ))}
+        <Divider />
         <Input
           placeholder='Send a message'
           value={this.state.value}
