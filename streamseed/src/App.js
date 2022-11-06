@@ -19,6 +19,8 @@ import React from 'react';
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Text } from '@chakra-ui/react';
+
+import XMTPChatbox from "./components/XMTPChatbox";
  
 const client = createReactClient({
   provider: studioProvider({ apiKey: '098c9b05-ebd9-4a18-8477-4ceade2a79b7' }),
@@ -38,20 +40,20 @@ const livepeerTheme = {
 
 class App extends React.Component {
   componentDidMount() {
-    window.addEventListener('unlockProtocol.status', e => {
+    window.addEventListener("unlockProtocol", this.unlockHandler);
+  }
 
-    });
+  unlockHandler = (e) => {
+    this.setState({ isUnlocked: e.detail === "unlocked" });
   }
 
   state = {
-    
-  }
-
-  buyMembershipToken = () => {
-
+    isUnlocked: false
   }
 
   render() {
+    const { isUnlocked } = this.state;
+
     return (
       <div className="App">
         <Grid templateAreas={`"header header" "player chatbox" "description description" "footer footer"`} gridTemplateRows={'7vh 1fr 10vh 5vh'} gridTemplateColumns={'75vw 1fr'} h='100vh' gap='0' color='blackAlpha.700' fontWeight='bold'>
@@ -81,7 +83,7 @@ class App extends React.Component {
           <GridItem pl='2' area={'chatbox'} className="Chatbox">
             <Center w="100%" h="100%">
               <Box className="ChatboxContainer">
-                  <Center w="100%" h="100%">
+                  {isUnlocked ? <XMTPChatbox /> : <Center w="100%" h="100%">
                     <VStack spacing="10">
                       <LockIcon boxSize="150" />
                       <Heading size="md" textAlign="center">
@@ -89,7 +91,7 @@ class App extends React.Component {
                       </Heading>
                       <Button className="JoinButton" onClick={window.unlockProtocol.loadCheckoutModal} size="lg">Join</Button>
                     </VStack>                    
-                  </Center>
+                  </Center>}
               </Box>
             </Center>
           </GridItem>
