@@ -14,7 +14,7 @@ import { publicProvider } from 'wagmi/providers/public';
 
 const { chains, provider } = configureChains(
   [chain.polygonMumbai],
-  [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
+  [alchemyProvider({ apiKey: "pUhD6ZzG_LJ9-tHLRnd7-P5bqFAXAS4x" }), publicProvider()]
 );
 
 const { connectors } = getDefaultWallets({

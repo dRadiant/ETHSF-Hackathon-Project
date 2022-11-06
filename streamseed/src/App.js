@@ -43,12 +43,20 @@ class App extends React.Component {
     window.addEventListener("unlockProtocol", this.unlockHandler);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener("unlockProtocol", this.unlockHandler);
+  }
+
   unlockHandler = (e) => {
     this.setState({ isUnlocked: e.detail === "unlocked" });
   }
 
   state = {
     isUnlocked: false
+  }
+
+  checkout = () => {
+    window.unlockProtocol?.loadCheckoutModal();
   }
 
   render() {
@@ -89,7 +97,7 @@ class App extends React.Component {
                       <Heading size="md" textAlign="center">
                       You must have a membership token to view and chat
                       </Heading>
-                      <Button className="JoinButton" onClick={window.unlockProtocol.loadCheckoutModal} size="lg">Join</Button>
+                      <Button className="JoinButton" onClick={this.checkout} size="lg">Join</Button>
                     </VStack>                    
                   </Center>}
               </Box>
