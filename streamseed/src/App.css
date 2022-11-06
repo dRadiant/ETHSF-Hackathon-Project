@@ -62,5 +62,10 @@ body {
 }
 
 .ChatboxInput {
-    padding: 1em;
+    padding: 1em !important;
+    border-color: #222222 !important;
+}
+
+.ChatboxInput:focus {
+    box-shadow: none !important;
 }
