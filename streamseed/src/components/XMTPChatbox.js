@@ -4,9 +4,7 @@ import { Box } from "@chakra-ui/react";
 
 import { Client } from '@xmtp/xmtp-js'
 
-import { useSigner } from 'wagmi'
-
-import { ethers } from "ethers";
+import { ethers, Wallet } from "ethers";
 
 class XMTPChatbox extends React.Component {
     // Wallet Address - 0x6C3ea836d6245fe6449E79c78736496bF3E7f2A5
@@ -14,31 +12,54 @@ class XMTPChatbox extends React.Component {
     // Wallet Pub Key - 0x048ebe16fae571f97a2a212f0ce00d539b54b95f511067fa2a957c1401b1c97070ed186b2ad08db5b7e352b470da29823515385db64ba1bf43b4ac8d8f20efb1af
 
     state = {
-        
+        userSigner: "",
+        userXMTP: "",
+        inboxXMTP: "",
+        conversationWithInbox: "",
+        messagesInInbox: ""
     }
 
     async componentDidMount() {
         window.Buffer = window.Buffer || require("buffer").Buffer; // Init Buffer as React Scripts >=5.0.0 removes it
 
-        const signer = (new ethers.providers.Web3Provider(window.ethereum)).getSigner();
+        const userSigner = (new ethers.providers.Web3Provider(window.ethereum)).getSigner();
 
-        const xmtp = await Client.create(signer);
+        const inboxSigner = new Wallet("0x64e78563846075f6ae7afb1ae74ecc0599b4e7499ee5cbbbf59cca96e87d2c42");
 
-        const conversation = await xmtp.conversations.newConversation('0x6C3ea836d6245fe6449E79c78736496bF3E7f2A5');
+        const userXMTP = await Client.create(userSigner);
 
-        const messages = await conversation.messages()
+        const inboxXMTP = await Client.create(inboxSigner);
 
-        await conversation.send('gm')
+        const conversationWithInbox = await userXMTP.conversations.newConversation('0x6C3ea836d6245fe6449E79c78736496bF3E7f2A5');
 
-        console.log(await conversation.messages())
-        
-        for await (const message of await conversation.streamMessages()) {
-            console.log(`[${message.senderAddress}]: ${message.content}`)
-         }
+        this.setState({ userSigner, userXMTP, inboxXMTP, conversationWithInbox });
+
+        this.pullInboxMessages();
+        this.interval = setInterval(() => this.pullInboxMessages, 1000);
     }
 
     componentWillUnmount() {
 
+    }
+
+    async pullInboxMessages() {
+        const { inboxXMTP } = this.state;
+        
+        /*
+            const messages = await conversationWithInbox.messages()
+
+            await conversationWithInbox.send('gm')
+
+            console.log(await conversationWithInbox.messages())
+        */
+
+        const messages = [];
+
+        const allConversations = await xmtp.conversations.list();
+
+        for (const convo of allConversations) {
+            
+        }
     }
 
     render() {
