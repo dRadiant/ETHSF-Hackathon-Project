@@ -55,7 +55,7 @@ class XMTPChatbox extends React.Component {
 
         const messages = [];
 
-        const allConversations = await xmtp.conversations.list();
+        const allConversations = await inboxXMTP.conversations.list();
 
         for (const convo of allConversations) {
             
