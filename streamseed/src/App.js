@@ -1,10 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 
-import { Box, Heading } from '@chakra-ui/react'
+import { Box, Button, Heading, VStack } from '@chakra-ui/react'
 import { Center } from '@chakra-ui/react'
 import { Grid, GridItem } from '@chakra-ui/react'
 import { Flex, Spacer } from '@chakra-ui/react'
+
+import { LockIcon } from '@chakra-ui/icons'
 
 import { Livepeer } from './components/Livepeer';
 
@@ -65,7 +67,15 @@ class App extends React.Component {
           <GridItem pl='2' area={'chatbox'} className="Chatbox">
             <Center w="100%" h="100%">
               <Box className="ChatboxContainer">
-                  <Center w="100%" h="100%">Chatbox</Center>
+                  <Center w="100%" h="100%">
+                    <VStack spacing="10">
+                      <LockIcon boxSize="150" />
+                      <Heading size="md" textAlign="center">
+                      You must have a membership token to view and chat
+                      </Heading>
+                      <Button className="JoinButton" size="lg">Join</Button>
+                    </VStack>                    
+                  </Center>
               </Box>
             </Center>
           </GridItem>

@@ -50,3 +50,8 @@ body {
     padding: 7px;
     font-size: small;
 }
+
+.JoinButton {
+    background-color: #404040 !important;
+    border-radius: 10px;
+}
