@@ -1,0 +1,141 @@
+import logo from './logo.svg';
+import './App.css';
+
+import { Box, Button, Image, Heading, VStack, HStack } from '@chakra-ui/react'
+import { Center } from '@chakra-ui/react'
+import { Grid, GridItem } from '@chakra-ui/react'
+import { Flex, Spacer } from '@chakra-ui/react'
+
+import { LockIcon } from '@chakra-ui/icons'
+
+import { Livepeer } from './components/Livepeer';
+
+import {
+  LivepeerConfig,
+  createReactClient,
+  studioProvider,
+} from '@livepeer/react';
+import { React } from 'react';
+import * as EpnsAPI from '@pushprotocol/restapi';
+
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { Text } from '@chakra-ui/react';
+ 
+const client = createReactClient({
+  provider: studioProvider({ apiKey: '098c9b05-ebd9-4a18-8477-4ceade2a79b7' }),
+});
+ 
+const livepeerTheme = {
+  colors: {
+    accent: 'rgb(0, 145, 255)',
+    containerBorderColor: 'rgba(0, 145, 255, 0.9)',
+  },
+  fonts: {
+    display: 'Inter',
+  },
+};
+// Unlock Protocol Mumbai - https://app.unlock-protocol.com/locks/lock?address=0x812b7b78ee707e1bcd32e0622888ff7d968fb2f2&network=80001
+
+class App extends React.Component {  
+  constructor(props) {
+    super(props);
+    this.state = {
+      notifications: "something"
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('unlockProtocol.status', e => {
+
+    });
+    const recipientAddress = 'eip155:5:0xeB62Df3428368d79B3a29cACF6A877E08C3cCB3e';
+    console.info("HEYYYYYYY")
+
+    EpnsAPI.user.getFeeds({
+      user: recipientAddress,
+      env: 'staging',
+      limit: 5,
+      page: 1
+    }).then(notifs => {
+      console.info(notifs);
+      this.setState({
+        notifications: notifs
+      })
+    })
+    
+  }
+
+  buyMembershipToken = () => {
+
+  }
+  
+
+  render() {
+  
+    return (
+      <div className="App">
+        <Grid templateAreas={`"header header" "player chatbox" "description description" "footer footer"`} gridTemplateRows={'7vh 1fr 10vh 5vh'} gridTemplateColumns={'75vw 1fr'} h='100vh' gap='0' color='blackAlpha.700' fontWeight='bold'>
+          <GridItem pl='2' /*bg='orange.300'*/ area={'header'} className="Header">
+            <Flex>
+              <Box p="1vh">
+                <Center>StreamSeed</Center>
+              </Box>
+              <Box>
+                {this.state.notifications}
+              </Box>
+              <Spacer />
+              <Box p="1vh">
+                <Center>
+                  <ConnectButton />
+                </Center>
+              </Box>
+            </Flex>
+          </GridItem>
+          <GridItem pl='0' /*bg='pink.300'*/ area={'player'} className="Player">
+            {/*<Heading size="sm">My Awesome Stream</Heading>*/}
+            <Center w="100%" h="100%">
+              <Box className="PlayerContainer">
+                <LivepeerConfig client={client} theme={livepeerTheme}>
+                  <Livepeer />
+                </LivepeerConfig>
+              </Box>
+            </Center>
+          </GridItem>
+          <GridItem pl='2' area={'chatbox'} className="Chatbox">
+            <Center w="100%" h="100%">
+              <Box className="ChatboxContainer">
+                  <Center w="100%" h="100%">
+                    <VStack spacing="10">
+                      <LockIcon boxSize="150" />
+                      <Heading size="md" textAlign="center">
+                      You must have a membership token to view and chat
+                      </Heading>
+                      <Button className="JoinButton" onClick={window.unlockProtocol.loadCheckoutModal} size="lg">Join</Button>
+                    </VStack>                    
+                  </Center>
+              </Box>
+            </Center>
+          </GridItem>
+          <GridItem pl='2' /*bg='yellow.300'*/ area={'description'} className="Description">
+            <Flex justify="left" align="left" ml="2vw" mt="-4vh">
+            <HStack spacing="4vw" w="100%" h="100%">
+              <HStack>
+                  <Image borderRadius='full' boxSize='50px' src='https://bit.ly/dan-abramov' />
+                  <Heading size="xs">Epic Creator</Heading>
+              </HStack>
+              <Box width="50%" pb="8vh" className="DescriptionBox">
+                  <Text textAlign="left" p="2">Welcome to my awesome stream, and thanks for reading my awesome description!</Text>
+              </Box>
+            </HStack>
+            </Flex>
+          </GridItem>
+          <GridItem pl='2' /*bg='blue.300'*/ area={'footer'} className="Footer">
+            
+          </GridItem>
+      </Grid>
+      </div>
+    );
+  }
+}
+
+export default App;
